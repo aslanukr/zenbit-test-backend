@@ -12,7 +12,7 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-  async register(usersDto: RegisterUserDto) {
+  async register(usersDto: RegisterUserDto): Promise<User> {
     const newUser = new this.userModel(usersDto);
     return newUser.save();
   }
