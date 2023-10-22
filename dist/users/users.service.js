@@ -27,7 +27,7 @@ let UsersService = class UsersService {
         const { email, password } = usersDto;
         const user = await this.userModel.findOne({ email });
         if (user) {
-            throw new common_1.BadRequestException('Email in use');
+            throw new common_1.BadRequestException('Email in use. Try another one');
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new this.userModel({
@@ -54,8 +54,8 @@ let UsersService = class UsersService {
         user.token = token;
         await user.save();
         return {
-            token,
-            email: user.email
+            email: user.email,
+            token
         };
     }
     async logout(email) {

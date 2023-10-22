@@ -21,7 +21,7 @@ export class UsersService {
 
     const user = await this.userModel.findOne({ email });
     if (user) {
-      throw new BadRequestException('Email in use');
+      throw new BadRequestException('Email in use. Try another one');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -60,8 +60,8 @@ export class UsersService {
     await user.save();
 
     return {
-      token,
-      email: user.email
+      email: user.email,
+      token
     };
   }
 
