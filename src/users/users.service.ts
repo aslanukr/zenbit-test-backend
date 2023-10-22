@@ -75,4 +75,8 @@ export class UsersService {
     user.token = '';
     await user.save();
   }
+
+  async getUserByToken(token: string) {
+    return await this.userModel.findOne({ token });
+  }
 }

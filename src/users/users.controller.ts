@@ -4,7 +4,9 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  Delete
+  Delete,
+  Get,
+  Request
 } from '@nestjs/common';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { UsersService } from './users.service';
@@ -35,5 +37,25 @@ export class UsersController {
   async logout(@Body() logoutDto: LogoutDto): Promise<void> {
     const { email } = logoutDto;
     await this.usersService.logout(email);
+  }
+
+  @Get('current')
+  async getCurrentUser(@Request() req) {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+      return { message: 'Token not provided' };
+    }
+
+    const tokenArray = authHeader.split(' ');
+    const token = tokenArray[1];
+
+    const user = await this.usersService.getUserByToken(token);
+
+    if (!user) {
+      return { message: 'Invalid token' };
+    }
+
+    return user.email;
   }
 }

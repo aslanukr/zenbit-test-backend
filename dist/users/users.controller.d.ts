@@ -12,4 +12,7 @@ export declare class UsersController {
         email: string;
     }>;
     logout(logoutDto: LogoutDto): Promise<void>;
+    getCurrentUser(req: any): Promise<string | {
+        message: string;
+    }>;
 }

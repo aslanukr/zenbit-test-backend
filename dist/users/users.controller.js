@@ -32,6 +32,19 @@ let UsersController = class UsersController {
         const { email } = logoutDto;
         await this.usersService.logout(email);
     }
+    async getCurrentUser(req) {
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            return { message: 'Token not provided' };
+        }
+        const tokenArray = authHeader.split(' ');
+        const token = tokenArray[1];
+        const user = await this.usersService.getUserByToken(token);
+        if (!user) {
+            return { message: 'Invalid token' };
+        }
+        return user.email;
+    }
 };
 exports.UsersController = UsersController;
 __decorate([
@@ -58,6 +71,13 @@ __decorate([
     __metadata("design:paramtypes", [logoutDto_dto_1.LogoutDto]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "logout", null);
+__decorate([
+    (0, common_1.Get)('current'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "getCurrentUser", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

@@ -66,6 +66,9 @@ let UsersService = class UsersService {
         user.token = '';
         await user.save();
     }
+    async getUserByToken(token) {
+        return await this.userModel.findOne({ token });
+    }
 };
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([
