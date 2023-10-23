@@ -24,7 +24,7 @@ let UsersService = class UsersService {
         this.userModel = userModel;
     }
     async register(usersDto) {
-        const { email, password } = usersDto;
+        const { username, email, password } = usersDto;
         const user = await this.userModel.findOne({ email });
         if (user) {
             throw new common_1.BadRequestException('Email in use. Try another one');
@@ -54,6 +54,7 @@ let UsersService = class UsersService {
         user.token = token;
         await user.save();
         return {
+            username: user.username,
             email: user.email,
             token
         };

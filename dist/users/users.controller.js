@@ -47,7 +47,10 @@ let UsersController = class UsersController {
         if (!user) {
             return { message: 'Invalid token' };
         }
-        return user.email;
+        return {
+            username: user.username,
+            email: user.email
+        };
     }
 };
 exports.UsersController = UsersController;

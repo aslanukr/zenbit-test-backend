@@ -25,6 +25,7 @@
 import { Document } from 'mongoose';
 export type UserDocument = User & Document;
 export declare class User extends Document {
+    username: string;
     email: string;
     password: string;
     token: string;

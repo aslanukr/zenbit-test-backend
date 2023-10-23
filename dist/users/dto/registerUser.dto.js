@@ -15,6 +15,10 @@ class RegisterUserDto {
 }
 exports.RegisterUserDto = RegisterUserDto;
 __decorate([
+    (0, class_validator_1.MinLength)(2, { message: 'User name must be at least 2 characters long' }),
+    __metadata("design:type", String)
+], RegisterUserDto.prototype, "username", void 0);
+__decorate([
     (0, class_validator_1.IsEmail)({}, { message: 'Invalid email address' }),
     __metadata("design:type", String)
 ], RegisterUserDto.prototype, "email", void 0);

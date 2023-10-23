@@ -9,11 +9,18 @@ export declare class UsersController {
     login(loginDto: LoginUserDto): Promise<{
         token: string;
         email: string;
+        username: string;
     }>;
     logout(req: any): Promise<{
         message: string;
     }>;
-    getCurrentUser(req: any): Promise<string | {
+    getCurrentUser(req: any): Promise<{
         message: string;
+        username?: undefined;
+        email?: undefined;
+    } | {
+        username: string;
+        email: string;
+        message?: undefined;
     }>;
 }

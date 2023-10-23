@@ -26,7 +26,7 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   async login(
     @Body() loginDto: LoginUserDto
-  ): Promise<{ token: string; email: string }> {
+  ): Promise<{ token: string; email: string; username: string }> {
     return this.usersService.login(loginDto);
   }
 
@@ -60,6 +60,9 @@ export class UsersController {
       return { message: 'Invalid token' };
     }
 
-    return user.email;
+    return {
+      username: user.username,
+      email: user.email
+    };
   }
 }

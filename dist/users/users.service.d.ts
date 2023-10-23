@@ -33,6 +33,7 @@ export declare class UsersService {
     login(loginDto: LoginUserDto): Promise<{
         token: string;
         email: string;
+        username: string;
     }>;
     logout(token: string): Promise<void>;
     getUserByToken(token: string): Promise<import("mongoose").Document<unknown, {}, UserDocument> & User & import("mongoose").Document<any, any, any> & {

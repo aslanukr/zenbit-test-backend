@@ -17,7 +17,7 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async register(usersDto: RegisterUserDto): Promise<User> {
-    const { email, password } = usersDto;
+    const { username, email, password } = usersDto;
 
     const user = await this.userModel.findOne({ email });
     if (user) {
@@ -38,7 +38,7 @@ export class UsersService {
 
   async login(
     loginDto: LoginUserDto
-  ): Promise<{ token: string; email: string }> {
+  ): Promise<{ token: string; email: string; username: string }> {
     const { email, password } = loginDto;
     const user = await this.userModel.findOne({ email });
 
@@ -60,6 +60,7 @@ export class UsersService {
     await user.save();
 
     return {
+      username: user.username,
       email: user.email,
       token
     };
