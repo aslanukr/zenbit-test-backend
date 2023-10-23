@@ -17,7 +17,7 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async register(usersDto: RegisterUserDto): Promise<User> {
-    const { username, email, password } = usersDto;
+    const { email, password } = usersDto;
 
     const user = await this.userModel.findOne({ email });
     if (user) {
