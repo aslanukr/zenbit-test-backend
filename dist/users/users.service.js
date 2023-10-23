@@ -58,10 +58,10 @@ let UsersService = class UsersService {
             token
         };
     }
-    async logout(email) {
-        const user = await this.userModel.findOne({ email });
+    async logout(token) {
+        const user = await this.userModel.findOne({ token });
         if (!user) {
-            throw new common_1.NotFoundException('User not found');
+            throw new common_1.NotFoundException('User is not logged in');
         }
         user.token = '';
         await user.save();

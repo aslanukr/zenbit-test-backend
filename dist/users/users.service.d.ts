@@ -34,7 +34,7 @@ export declare class UsersService {
         token: string;
         email: string;
     }>;
-    logout(email: string): Promise<void>;
+    logout(token: string): Promise<void>;
     getUserByToken(token: string): Promise<import("mongoose").Document<unknown, {}, UserDocument> & User & import("mongoose").Document<any, any, any> & {
         _id: import("mongoose").Types.ObjectId;
     }>;

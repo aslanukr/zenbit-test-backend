@@ -4,7 +4,6 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  Delete,
   Get,
   Request
 } from '@nestjs/common';
@@ -12,7 +11,6 @@ import { RegisterUserDto } from './dto/registerUser.dto';
 import { UsersService } from './users.service';
 import { User } from './schemas/user.schema';
 import { LoginUserDto } from './dto/loginUserDto.dto';
-import { LogoutDto } from './dto/logoutDto.dto';
 
 @Controller('users')
 export class UsersController {
@@ -32,11 +30,17 @@ export class UsersController {
     return this.usersService.login(loginDto);
   }
 
-  @Delete('logout')
+  @Post('logout')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async logout(@Body() logoutDto: LogoutDto): Promise<void> {
-    const { email } = logoutDto;
-    await this.usersService.logout(email);
+  async logout(@Request() req) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return { message: 'Token not provided' };
+    }
+
+    const tokenArray = authHeader.split(' ');
+    const token = tokenArray[1];
+    await this.usersService.logout(token);
   }
 
   @Get('current')

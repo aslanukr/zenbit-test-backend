@@ -65,11 +65,11 @@ export class UsersService {
     };
   }
 
-  async logout(email: string): Promise<void> {
-    const user = await this.userModel.findOne({ email });
+  async logout(token: string) {
+    const user = await this.userModel.findOne({ token });
 
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('User is not logged in');
     }
 
     user.token = '';

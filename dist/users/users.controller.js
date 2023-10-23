@@ -17,7 +17,6 @@ const common_1 = require("@nestjs/common");
 const registerUser_dto_1 = require("./dto/registerUser.dto");
 const users_service_1 = require("./users.service");
 const loginUserDto_dto_1 = require("./dto/loginUserDto.dto");
-const logoutDto_dto_1 = require("./dto/logoutDto.dto");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -28,9 +27,14 @@ let UsersController = class UsersController {
     async login(loginDto) {
         return this.usersService.login(loginDto);
     }
-    async logout(logoutDto) {
-        const { email } = logoutDto;
-        await this.usersService.logout(email);
+    async logout(req) {
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            return { message: 'Token not provided' };
+        }
+        const tokenArray = authHeader.split(' ');
+        const token = tokenArray[1];
+        await this.usersService.logout(token);
     }
     async getCurrentUser(req) {
         const authHeader = req.headers.authorization;
@@ -64,11 +68,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "login", null);
 __decorate([
-    (0, common_1.Delete)('logout'),
+    (0, common_1.Post)('logout'),
     (0, common_1.HttpCode)(common_1.HttpStatus.NO_CONTENT),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [logoutDto_dto_1.LogoutDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "logout", null);
 __decorate([
